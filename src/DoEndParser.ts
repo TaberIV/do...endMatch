@@ -107,15 +107,21 @@ export default class DoEndParser {
           parseDir === 1 ? wordARange.end : wordARange.start - 1
         );
 
-        const ranges = [
-          new Range(
-            new Position(line, wordARange.start),
-            new Position(line, wordARange.end)
-          )
-        ];
+        if (wordBRange !== undefined) {
+          const ranges = [
+            new Range(
+              new Position(line, wordARange.start),
+              new Position(line, wordARange.end)
+            ),
+            new Range(
+              new Position(line, wordBRange.start),
+              new Position(line, wordBRange.end)
+            )
+          ];
 
-        this.past = true;
-        editor.setDecorations(this.decoration, ranges);
+          this.past = true;
+          editor.setDecorations(this.decoration, ranges);
+        }
       }
     }
   }
@@ -168,5 +174,5 @@ export default class DoEndParser {
     }
   }
 
-  dispose() {}
+  dispose() { }
 }
