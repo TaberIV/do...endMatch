@@ -165,15 +165,11 @@ export default class DoEndParser {
     }
 
     // Go to next line
-    if (forward) {
-      return doc.lineCount > line
-        ? this.parseUntilComplement(open, parseDir, doc, line + 1)
-        : undefined;
-    } else {
-      return line > 0
-        ? this.parseUntilComplement(open, parseDir, doc, line - 1)
-        : undefined;
+    if (line > 0 && doc.lineCount > line) {
+      return this.parseUntilComplement(open, parseDir, doc, line + parseDir);
     }
+
+    return undefined;
   }
 
   dispose() {}
