@@ -38,12 +38,12 @@ export default class DoEndParser {
   }
 
   private findWordRange(
-    lineText: string,
+    doc: TextDocument,
+    line: number,
     character: number
-  ): {
-    start: number;
-    end: number;
-  } {
+  ): { word: string; wordRange: Range } {
+    const lineText = doc.lineAt(line).text;
+
     let start = character;
     while (start > 0) {
       const char = lineText.slice(start - 1, start);
@@ -66,7 +66,12 @@ export default class DoEndParser {
       }
     }
 
-    return { start, end };
+    const word = lineText.slice(start, end);
+    const wordRange = new Range(
+      new Position(line, start),
+      new Position(line, end)
+    );
+    return { word, wordRange };
   }
 
   public matchDoEnd() {
@@ -90,13 +95,16 @@ export default class DoEndParser {
 
       // Line and column numbers
       const { line, character } = selection.start;
-      const lineText = doc.lineAt(line).text;
 
       // Get word surrounding cursor, if any
-      const wordARange = this.findWordRange(lineText, character);
-      const wordA = lineText.slice(wordARange.start, wordARange.end);
+      const { word: wordA, wordRange: wordARange } = this.findWordRange(
+        doc,
+        line,
+        character
+      );
 
       if (this.parseDict.all.includes(wordA)) {
+        // Finds whether to go forwards or backwards
         const parseDir = this.parseDict.open.includes(wordA) ? 1 : -1;
 
         // Find complement of wordA
@@ -105,20 +113,14 @@ export default class DoEndParser {
           parseDir,
           doc,
           line,
-          parseDir === 1 ? wordARange.end : wordARange.start - 1
+          parseDir === 1
+            ? wordARange.end.character
+            : wordARange.start.character - 1
         );
 
         if (wordBRange !== undefined) {
-          const ranges = [
-            new Range(
-              new Position(line, wordARange.start),
-              new Position(line, wordARange.end)
-            ),
-            wordBRange
-          ];
-
           this.past = true;
-          editor.setDecorations(this.decoration, ranges);
+          editor.setDecorations(this.decoration, [wordARange, wordBRange]);
         }
       }
     }
@@ -145,8 +147,7 @@ export default class DoEndParser {
         continue;
       }
 
-      const wordRange = this.findWordRange(lineText, character);
-      const word = lineText.slice(wordRange.start, wordRange.end);
+      const { word, wordRange } = this.findWordRange(doc, line, character);
 
       if (this.parseDict.open.includes(word)) {
         open += parseDir;
@@ -154,13 +155,12 @@ export default class DoEndParser {
         open -= parseDir;
       }
 
-      character = forward ? wordRange.end : wordRange.start - 1;
+      character = forward
+        ? wordRange.end.character
+        : wordRange.start.character - 1;
 
       if (open === 0) {
-        return new Range(
-          new Position(line, wordRange.start),
-          new Position(line, wordRange.end)
-        );
+        return wordRange;
       }
     }
 
