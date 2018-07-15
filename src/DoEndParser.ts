@@ -10,11 +10,6 @@ import {
   TextDocument
 } from "vscode";
 
-interface IWordRange {
-  start: number;
-  end: number;
-}
-
 export default class DoEndParser {
   private parseDict: {
     open: string[];
@@ -29,7 +24,7 @@ export default class DoEndParser {
     // TODO config integration
     // const config = workspace.getConfiguration("do-end-match");
     const decoration = {
-      color: "#A581C1",
+      color: "#C586C0",
       borderWidth: "1px",
       borderStyle: "none none solid none"
     };
@@ -43,7 +38,13 @@ export default class DoEndParser {
     };
   }
 
-  private findWordRange(lineText: string, character: number): IWordRange {
+  private findWordRange(
+    lineText: string,
+    character: number
+  ): {
+    start: number;
+    end: number;
+  } {
     let start = character;
     while (start > 0) {
       const char = lineText.slice(start - 1, start);
@@ -99,6 +100,7 @@ export default class DoEndParser {
       if (this.parseDict.all.includes(wordA)) {
         const parseDir = this.parseDict.open.includes(wordA) ? 1 : -1;
 
+        // Find complement of wordA
         const wordBRange = this.parseUntilComplement(
           1,
           parseDir,
@@ -113,10 +115,7 @@ export default class DoEndParser {
               new Position(line, wordARange.start),
               new Position(line, wordARange.end)
             ),
-            new Range(
-              new Position(line, wordBRange.start),
-              new Position(line, wordBRange.end)
-            )
+            wordBRange
           ];
 
           this.past = true;
@@ -132,7 +131,7 @@ export default class DoEndParser {
     doc: TextDocument,
     line: number,
     character?: number
-  ): IWordRange | undefined {
+  ): Range | undefined {
     const forward = parseDir === 1;
     const lineText = doc.lineAt(line).text;
 
@@ -140,8 +139,7 @@ export default class DoEndParser {
       character = forward ? 0 : lineText.length;
     }
 
-    const loopCond = forward ? character < lineText.length : character >= 0;
-    while (loopCond) {
+    while (forward ? character < lineText.length : character >= 0) {
       // If not on a word move on
       if (this.wordSeparators.includes(lineText[character])) {
         character += parseDir;
@@ -157,8 +155,13 @@ export default class DoEndParser {
         open -= parseDir;
       }
 
+      character = forward ? wordRange.end : wordRange.start - 1;
+
       if (open === 0) {
-        return wordRange;
+        return new Range(
+          new Position(line, wordRange.start),
+          new Position(line, wordRange.end)
+        );
       }
     }
 
@@ -174,5 +177,5 @@ export default class DoEndParser {
     }
   }
 
-  dispose() { }
+  dispose() {}
 }

@@ -10,15 +10,11 @@ export default class DoEndParserController {
 
   constructor(parser: DoEndParser) {
     this.parser = parser;
-    this.parser.matchDoEnd();
 
     // Subscribe to selection change and editor activation events
     const subscriptions: Disposable[] = [];
     window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
     window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
-
-    // Update
-    this.parser.matchDoEnd();
 
     // Create a combined disposable from both event subscriptions
     this.disposable = Disposable.from(...subscriptions);
