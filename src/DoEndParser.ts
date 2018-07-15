@@ -24,7 +24,6 @@ export default class DoEndParser {
     // TODO config integration
     // const config = workspace.getConfiguration("do-end-match");
     const decoration = {
-      color: "#C586C0",
       borderWidth: "1px",
       borderStyle: "none none solid none"
     };
