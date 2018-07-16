@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import {
   window,
-  // workspace,
+  workspace,
   TextEditorDecorationType,
   Range,
   Position,
@@ -18,23 +18,23 @@ export default class DoEndParser {
   };
   private decoration: TextEditorDecorationType;
   private past: boolean;
-  private wordSeparators = " \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
+  private wordSeparators: string;
 
   constructor() {
-    // TODO config integration
-    // const config = workspace.getConfiguration("do-end-match");
-    const decoration = {
-      borderWidth: "1px",
-      borderStyle: "none none solid none"
-    };
+    // Get configuration
+    const config = workspace.getConfiguration("doEndMatch");
 
+    const decoration = config.style;
     this.decoration = window.createTextEditorDecorationType(decoration);
+
+    const dict = config.dict;
+    const all = dict.open.concat(dict.close);
+    this.parseDict = { all, ...dict };
+
+    this.wordSeparators = config.wordSeparators;
+
+    // Set control values
     this.past = false;
-    this.parseDict = {
-      open: ["do", "fn"],
-      close: ["end"],
-      all: ["do", "fn", "end"]
-    };
   }
 
   private findWordRange(

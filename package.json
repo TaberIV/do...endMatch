@@ -45,6 +45,11 @@
             "borderStyle": "none none solid none"
           },
           "description": "Custom style for matching do...end blocks"
+        },
+        "doEndMatch.wordSeparators": {
+          "type": "string",
+          "default": " \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+          "description": "Characters that will be used as word separators when looking for do/end."
         }
       }
     }
