@@ -33,7 +33,6 @@
       {
         "command": "extension.jump",
         "key": "alt+shift+\\",
-        "mac": "ctrl+shift+\\",
         "when": "editorTextFocus"
       }
     ],
