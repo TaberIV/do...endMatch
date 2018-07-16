@@ -2,7 +2,7 @@
   "name": "do-end-match",
   "displayName": "do...end Match",
   "description": "Visibly matches do end blocks like brackets.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "Taber",
   "engines": {
     "vscode": "^1.25.0"
