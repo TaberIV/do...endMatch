@@ -11,6 +11,7 @@
   "bugs": {
     "url": "https://github.com/TaberIV/do...endMatch/issues"
   },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.25.0"
   },
