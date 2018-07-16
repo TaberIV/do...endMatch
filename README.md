@@ -6,7 +6,8 @@ This is a simple extension that matches do end blocks like brackets, `()`, `[]`,
 
 - Underlines keywords do and end and their partner when the cursor is on it.
 - Allows jumping to these keywords like Go to Bracket command.
-  - Keyboard Shortcut: `ctrl+shift+\`
+  - PC/Linux: `alt+shift+\`
+  - Mac: `ctrl+shift+\`
 
 ## Extension Settings
 
