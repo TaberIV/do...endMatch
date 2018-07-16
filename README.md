@@ -18,6 +18,10 @@ This is a simple extension that matches do end blocks like brackets, `()`, `[]`,
 
 ## Release Notes
 
+### 1.2.0
+
+Adds keyword jumping.
+
 ### 1.0.1
 
 Adds settings.
