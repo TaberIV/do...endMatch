@@ -2,7 +2,7 @@
   "name": "do-end-match",
   "displayName": "do...end Match",
   "description": "Visibly matches do end blocks like brackets.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "Taber",
   "repository": {
     "type": "git",
