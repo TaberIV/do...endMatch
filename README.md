@@ -6,8 +6,10 @@ This is a simple extension that matches do end blocks like brackets, `()`, `[]`,
 
 No settings are supported yet.
 
-| Setting | Default | Description |
-| ------- | ------- | ----------- |
+| Setting          | Default                                                                                                        | Description                                                                          |
+| ---------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| doEndMatch.dict  | <code>{<br>&nbsp;&nbsp;"open": ["do", "fn"], <br>&nbsp;&nbsp;"close": ["end"]<br>}</code>                      | The words to match. Any combination of words in open and close will trigger matches. |
+| doEndMatch.style | <code>{<br>&nbsp;&nbsp;"borderWidth": "1px", <br>&nbsp;&nbsp;"borderStyle": "none none solid none"<br>}</code> | Custom style for matching do...end blocks                                            |
 
 ## Release Notes
 

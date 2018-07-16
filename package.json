@@ -8,6 +8,9 @@
     "type": "git",
     "url": "https://github.com/TaberIV/do...endMatch"
   },
+  "bugs": {
+    "url": "https://github.com/TaberIV/do...endMatch/issues"
+  },
   "engines": {
     "vscode": "^1.25.0"
   },
@@ -19,12 +22,32 @@
   ],
   "main": "./out/extension",
   "contributes": {
-    "commands": [
-      {
-        "command": "extension.sayHello",
-        "title": "Hello World"
+    "configuration": {
+      "title": "do...end match",
+      "properties": {
+        "doEndMatch.dict": {
+          "type": "object",
+          "default": {
+            "open": [
+              "do",
+              "fn"
+            ],
+            "close": [
+              "end"
+            ]
+          },
+          "description": "The words to match. Any combination of words in open and close will trigger matches."
+        },
+        "doEndMatch.style": {
+          "type": "object",
+          "default": {
+            "borderWidth": "1px",
+            "borderStyle": "none none solid none"
+          },
+          "description": "Custom style for matching do...end blocks"
+        }
       }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -34,10 +57,10 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.6",
-    "tslint": "^5.8.0",
-    "@types/node": "^7.0.43",
-    "@types/mocha": "^2.2.42"
+    "typescript": "^2.9.2",
+    "vscode": "^1.1.18",
+    "tslint": "^5.10.0",
+    "@types/node": "^10.5.2",
+    "@types/mocha": "^5.2.4"
   }
 }
