@@ -3,7 +3,7 @@
   "displayName": "do...end Match",
   "description": "Visibly matches do end blocks like brackets.",
   "version": "1.0.0",
-  "publisher": "TaberIV",
+  "publisher": "Taber",
   "repository": {
     "type": "git",
     "url": "https://github.com/TaberIV/do...endMatch"
