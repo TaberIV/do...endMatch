@@ -1,6 +1,6 @@
 # do...end Match
 
-This is a simple extension that matches do end blocks like brackets, `()`, `[]`, or `{}`. When the cursor is on or next to do or end it will underline it and the closing word.
+This is a simple extension that matches do end blocks like brackets, `()`, `[]`, or `{}`. When the cursor is on or next to do or end it will underline it and the closing word. This extension was designed with Elixir in mind, so fn will also act as do and close a block by default. The extension will still work with other languages and this behavior is optional.
 
 ## Extension Settings
 
