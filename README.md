@@ -4,10 +4,11 @@ This is a simple extension that matches do end blocks like brackets, `()`, `[]`,
 
 ## Extension Settings
 
-| Setting          | Default                                                                                                        | Description                                                                          |
-| ---------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| doEndMatch.dict  | <code>{<br>&nbsp;&nbsp;"open": ["do", "fn"], <br>&nbsp;&nbsp;"close": ["end"]<br>}</code>                      | The words to match. Any combination of words in open and close will trigger matches. |
-| doEndMatch.style | <code>{<br>&nbsp;&nbsp;"borderWidth": "1px", <br>&nbsp;&nbsp;"borderStyle": "none none solid none"<br>}</code> | Custom style for matching do...end blocks                                            |
+| Setting                   | Default                                                                                                        | Description                                                                          |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| doEndMatch.dict           | <code>{<br>&nbsp;&nbsp;"open": ["do", "fn"], <br>&nbsp;&nbsp;"close": ["end"]<br>}</code>                      | The words to match. Any combination of words in open and close will trigger matches. |
+| doEndMatch.style          | <code>{<br>&nbsp;&nbsp;"borderWidth": "1px", <br>&nbsp;&nbsp;"borderStyle": "none none solid none"<br>}</code> | Custom style for matching do...end blocks                                            |
+| doEndMatch.wordSeparators | ``" \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?"``                                                                   | Characters that will be used as word separators when looking for do/end.             |
 
 ## Release Notes
 
