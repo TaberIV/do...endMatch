@@ -165,7 +165,7 @@ export default class DoEndParser {
     }
 
     // Go to next line
-    if (line > 0 && doc.lineCount > line) {
+    if (line + parseDir >= 0 && doc.lineCount > line + parseDir) {
       return this.parseUntilComplement(open, parseDir, doc, line + parseDir);
     }
 
