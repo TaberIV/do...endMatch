@@ -1,7 +1,7 @@
 "use strict";
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { window, Disposable } from "vscode";
+import { Disposable, window } from "vscode";
 import DoEndParser from "./DoEndParser";
 
 export default class DoEndParserController {
@@ -20,7 +20,7 @@ export default class DoEndParserController {
     this.disposable = Disposable.from(...subscriptions);
   }
 
-  dispose() {
+  public dispose() {
     this.disposable.dispose();
   }
 

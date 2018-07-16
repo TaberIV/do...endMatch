@@ -23,6 +23,20 @@
   ],
   "main": "./out/extension",
   "contributes": {
+    "commands": [
+      {
+        "command": "extension.jump",
+        "title": "Jump to do/end"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.jump",
+        "key": "ctrl+shift+\\",
+        "mac": "ctrl+shift+\\",
+        "when": "editorTextFocus"
+      }
+    ],
     "configuration": {
       "title": "do...end match",
       "properties": {
