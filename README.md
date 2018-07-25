@@ -18,17 +18,25 @@ This is a simple extension that matches do end blocks like brackets, `()`, `[]`,
 
 ## Release Notes
 
-### 1.2.0
-
-Adds keyword jumping.
-
-### 1.0.1
-
-Adds settings.
-
 ### 1.0.0
 
 Initial release of do...end Match
+
+#### 1.0.1
+
+Adds settings.
+
+### 1.1.0
+
+Adds keyword jumping.
+
+#### 1.1.1
+
+Changes keyword jumping keyboard shortcut to `alt+shift+\`
+
+#### 1.1.2
+
+Fixes bug for Elixir where `do:` still connects with `end`
 
 ## Acknowledgements
 

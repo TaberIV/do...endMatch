@@ -218,6 +218,14 @@ export default class DoEndParser {
     // Check if word opens or closes
     if (this.keywords.open.includes(word)) {
       open += parseDir;
+
+      if (word === "do") {
+        const nextChar = doc
+          .lineAt(range.end.line)
+          .text.charAt(range.end.character);
+
+        open -= nextChar === ":" ? parseDir : 0;
+      }
     } else if (this.keywords.close.includes(word)) {
       open -= parseDir;
     }
