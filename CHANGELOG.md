@@ -1,7 +1,27 @@
 # Change Log
-All notable changes to the "do-end-match" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+All notable changes to _do...End Match_ will be documented in this file.
 
-## [Unreleased]
-- Initial release
+## Release Notes
+
+### 1.0.0
+
+- Initial release of do...end Match
+
+#### 1.0.1
+
+- Adds settings.
+
+### 1.1.0
+
+- Adds keyword jumping.
+
+#### 1.1.1
+
+- Changes keyword jumping keyboard shortcut to `shift+alt+\`
+
+#### 1.1.2
+
+- Fixes bug for Elixir where `do:` still connects with `end`
+- Adds `doEndMatch.ignoreDoWithColon` setting to disable above fix
+- Changes `doEndMatch.dict` setting to `doEndMatch.keywords`

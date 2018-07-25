@@ -68,7 +68,7 @@
         "doEndMatch.ignoreDoWithColon": {
           "type": "boolean",
           "default": true,
-          "description": "If true, ignores 'do' when followed by ':'."
+          "description": "When enabled fixes a bug that causes `do:` to still match with `end` in Elixir."
         }
       }
     }
