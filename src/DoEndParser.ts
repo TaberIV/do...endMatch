@@ -68,17 +68,7 @@ export default class DoEndParser {
     const { word: wordA, range: wordARange } = this.findWordRange(doc, pos);
 
     // If word a keyword then find the complement and highlight them both.
-    if (this.keywords.all.includes(wordA)) {
-      if (wordA === "do" && this.ignoreDoWithColon) {
-        const nextChar = doc
-          .lineAt(wordARange.end.line)
-          .text.charAt(wordARange.end.character);
-
-        if (nextChar === ":") {
-          return;
-        }
-      }
-
+    if (this.isKeyword(wordA, doc, wordARange)) {
       // Check whether to go forwards or backwards
       const parseDir = this.keywords.open.includes(wordA) ? 1 : -1;
 
@@ -97,6 +87,7 @@ export default class DoEndParser {
     }
   }
 
+  // Jumps to complementary or nearest keyword
   public jump() {
     // Get the current text editor
     const editor = window.activeTextEditor;
@@ -110,7 +101,26 @@ export default class DoEndParser {
     const { word, range } = this.findWordRange(doc, pos);
 
     // If on a keyword, go to closing keyword. Else, go to next keyword
-    if (this.keywords.all.includes(word)) {
+    if (this.isKeyword(word, doc, range)) {
+      if (word === "do" && this.ignoreDoWithColon) {
+        const nextChar = doc
+          .lineAt(range.end.line)
+          .text.charAt(range.end.character);
+
+        if (nextChar === ":") {
+          const { range: nextRange } = this.findNextKeyword(
+            1,
+            doc,
+            pos.line,
+            range.end.character
+          );
+
+          if (!nextRange.isEmpty) {
+            editor.selection = new Selection(nextRange.start, nextRange.end);
+          }
+        }
+      }
+
       const parseDir = this.keywords.open.includes(word) ? 1 : -1;
       const complement = this.parseUntilComplement(
         1,
@@ -168,6 +178,24 @@ export default class DoEndParser {
     return { word, range };
   }
 
+  private isKeyword(word: string, doc: TextDocument, range: Range) {
+    return (
+      this.keywords.all.includes(word) && !this.shouldIgnore(word, doc, range)
+    );
+  }
+
+  private shouldIgnore(word: string, doc: TextDocument, range: Range) {
+    if (word === "do" && this.ignoreDoWithColon) {
+      const nextChar = doc
+        .lineAt(range.end.line)
+        .text.charAt(range.end.character);
+
+      return nextChar === ":";
+    }
+
+    return false;
+  }
+
   private findNextKeyword(
     parseDir: 1 | -1,
     doc: TextDocument,
@@ -194,7 +222,7 @@ export default class DoEndParser {
         new Position(line, character)
       );
 
-      if (this.keywords.all.includes(word)) {
+      if (this.isKeyword(word, doc, range)) {
         return { word, range };
       } else {
         character = forward ? range.end.character : range.start.character - 1;
@@ -230,18 +258,12 @@ export default class DoEndParser {
     }
 
     // Check if word opens or closes
-    if (this.keywords.open.includes(word)) {
-      open += parseDir;
-
-      if (word === "do" && this.ignoreDoWithColon) {
-        const nextChar = doc
-          .lineAt(range.end.line)
-          .text.charAt(range.end.character);
-
-        open -= nextChar === ":" ? parseDir : 0;
+    if (this.isKeyword(word, doc, range)) {
+      if (this.keywords.open.includes(word)) {
+        open += parseDir;
+      } else if (this.keywords.close.includes(word)) {
+        open -= parseDir;
       }
-    } else if (this.keywords.close.includes(word)) {
-      open -= parseDir;
     }
 
     // Closing found
