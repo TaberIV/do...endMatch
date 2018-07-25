@@ -2,7 +2,7 @@
   "name": "do-end-match",
   "displayName": "do...end Match",
   "description": "Visibly matches do end blocks like brackets.",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "publisher": "Taber",
   "repository": {
     "type": "git",
@@ -32,8 +32,7 @@
     "keybindings": [
       {
         "command": "extension.jump",
-        "key": "ctrl+shift+\\",
-        "mac": "ctrl+shift+\\",
+        "key": "alt+shift+\\",
         "when": "editorTextFocus"
       }
     ],
