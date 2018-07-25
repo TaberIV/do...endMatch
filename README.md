@@ -1,42 +1,21 @@
 # do...end Match
 
-This is a simple extension that matches do end blocks like brackets, `()`, `[]`, or `{}`. When the cursor is on or next to do or end it will underline it and the closing word. This extension was designed with Elixir in mind, so fn will also act as do and close a block by default. The extension will still work with other languages and this behavior is optional.
+This is a simple extension that matches keyword blocks like brackets, `()`, `[]`, or `{}`. When the cursor is on or next to a block keyword it will underline it and the opening/closing word. This extension was designed with Elixir in mind, so the default keywords are `do` and `fn` to open and `end` to close. This extension is fully configurable to match any words though! If you have any requests for features open a ticket on GitHub and I'd be happy to help if possible.
 
 ## Features
 
-- Underlines keywords do and end and their partner when the cursor is on it.
+- When the cursor is on a block-defining keyword it and the corresponding opening/closing word will be underlined.
 - Allows jumping to these keywords like Go to Bracket command.
   - Keyboard Shortcut: `alt+shift+\`
 
 ## Extension Settings
 
-| Setting                   | Default                                                                                                        | Description                                                                          |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| doEndMatch.dict           | <code>{<br>&nbsp;&nbsp;"open": ["do", "fn"], <br>&nbsp;&nbsp;"close": ["end"]<br>}</code>                      | The words to match. Any combination of words in open and close will trigger matches. |
-| doEndMatch.style          | <code>{<br>&nbsp;&nbsp;"borderWidth": "1px", <br>&nbsp;&nbsp;"borderStyle": "none none solid none"<br>}</code> | Custom style for matching do...end blocks                                            |
-| doEndMatch.wordSeparators | ``" \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?"``                                                                   | Characters that will be used as word separators when looking for do/end.             |
-
-## Release Notes
-
-### 1.0.0
-
-Initial release of do...end Match
-
-#### 1.0.1
-
-Adds settings.
-
-### 1.1.0
-
-Adds keyword jumping.
-
-#### 1.1.1
-
-Changes keyword jumping keyboard shortcut to `alt+shift+\`
-
-#### 1.1.2
-
-Fixes bug for Elixir where `do:` still connects with `end`
+| Setting                        | Default                                                                                                        | Description                                                                         |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `doEndMatch.keywords`          | <code>{<br>&nbsp;&nbsp;"open": ["do", "fn"], <br>&nbsp;&nbsp;"close": ["end"]<br>}</code>                      | Keywords to match. Any combination of words in open and close will trigger matches. |
+| `doEndMatch.style`             | <code>{<br>&nbsp;&nbsp;"borderWidth": "1px", <br>&nbsp;&nbsp;"borderStyle": "none none solid none"<br>}</code> | Custom style for matching do...end blocks                                           |
+| `doEndMatch.wordSeparators`    | ``" \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?"``                                                                   | Characters that will be used as word separators when looking for do/end.            |
+| `doEndMatch.ignoreDoWithColon` | `true`                                                                                                         | When enabled, fixes a bug that causes `do:` to still match with `end` in Elixir.    |
 
 ## Acknowledgements
 

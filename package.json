@@ -39,7 +39,7 @@
     "configuration": {
       "title": "do...end match",
       "properties": {
-        "doEndMatch.dict": {
+        "doEndMatch.keywords": {
           "type": "object",
           "default": {
             "open": [
@@ -50,7 +50,7 @@
               "end"
             ]
           },
-          "description": "The words to match. Any combination of words in open and close will trigger matches."
+          "description": "The keywords to match. Any combination of words in open and close will trigger matches."
         },
         "doEndMatch.style": {
           "type": "object",
@@ -58,12 +58,17 @@
             "borderWidth": "1px",
             "borderStyle": "none none solid none"
           },
-          "description": "Custom style for matching do...end blocks"
+          "description": "Custom style for matching keyword blocks"
         },
         "doEndMatch.wordSeparators": {
           "type": "string",
           "default": " \n\t`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
-          "description": "Characters that will be used as word separators when looking for do/end."
+          "description": "Characters that will be used as word separators when looking for keywords."
+        },
+        "doEndMatch.ignoreDoWithColon": {
+          "type": "boolean",
+          "default": true,
+          "description": "If true, ignores 'do' when followed by ':'."
         }
       }
     }

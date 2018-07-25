@@ -25,6 +25,7 @@ export default class DoEndParser {
   private decoration: TextEditorDecorationType;
   private past: boolean;
   private wordSeparators: string;
+  private ignoreDoWithColon: boolean;
 
   constructor() {
     // Get configuration
@@ -33,11 +34,13 @@ export default class DoEndParser {
     const decoration = config.style;
     this.decoration = window.createTextEditorDecorationType(decoration);
 
-    const dict = config.dict;
-    const all = dict.open.concat(dict.close);
-    this.keywords = { all, ...dict };
+    const keywords = config.keywords;
+    const all = keywords.open.concat(keywords.close);
+    this.keywords = { all, ...keywords };
 
     this.wordSeparators = config.wordSeparators;
+
+    this.ignoreDoWithColon = config.ignoreDoWithColon;
 
     // Set control values
     this.past = false;
@@ -64,9 +67,9 @@ export default class DoEndParser {
     // Get word surrounding cursor, if any
     const { word: wordA, range: wordARange } = this.findWordRange(doc, pos);
 
-    // If word is in the dict, find the complement and highlight them both.
+    // If word a keyword then find the complement and highlight them both.
     if (this.keywords.all.includes(wordA)) {
-      if (wordA === "do") {
+      if (wordA === "do" && this.ignoreDoWithColon) {
         const nextChar = doc
           .lineAt(wordARange.end.line)
           .text.charAt(wordARange.end.character);
@@ -230,7 +233,7 @@ export default class DoEndParser {
     if (this.keywords.open.includes(word)) {
       open += parseDir;
 
-      if (word === "do") {
+      if (word === "do" && this.ignoreDoWithColon) {
         const nextChar = doc
           .lineAt(range.end.line)
           .text.charAt(range.end.character);
