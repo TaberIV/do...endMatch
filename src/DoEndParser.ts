@@ -45,6 +45,7 @@ export default class DoEndParser {
 
   public dispose() {}
 
+  // Main function that decorates matches
   public matchDoEnd() {
     // Get the current text editor
     const editor = window.activeTextEditor;
@@ -65,6 +66,16 @@ export default class DoEndParser {
 
     // If word is in the dict, find the complement and highlight them both.
     if (this.keywords.all.includes(wordA)) {
+      if (wordA === "do") {
+        const nextChar = doc
+          .lineAt(wordARange.end.line)
+          .text.charAt(wordARange.end.character);
+
+        if (nextChar === ":") {
+          return;
+        }
+      }
+
       // Check whether to go forwards or backwards
       const parseDir = this.keywords.open.includes(wordA) ? 1 : -1;
 
