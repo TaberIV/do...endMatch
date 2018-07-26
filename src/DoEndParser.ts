@@ -17,22 +17,30 @@ interface IWordRange {
 }
 
 export default class DoEndParser {
-  private keywords: {
+  private keywords!: {
     open: string[];
     close: string[];
     all: string[];
   };
-  private decoration: TextEditorDecorationType;
+  private decoration!: TextEditorDecorationType;
   private past: boolean;
-  private wordSeparators: string;
-  private ignoreDoWithColon: boolean;
+  private wordSeparators!: string;
+  private ignoreDoWithColon!: boolean;
 
   constructor() {
     // Get configuration
+    this.updateConfig();
+
+    // Set control values
+    this.past = false;
+  }
+
+  public dispose() {}
+
+  public updateConfig() {
     const config = workspace.getConfiguration("doEndMatch");
 
-    const decoration = config.style;
-    this.decoration = window.createTextEditorDecorationType(decoration);
+    this.decoration = window.createTextEditorDecorationType(config.style);
 
     const keywords = config.keywords;
     const all = keywords.open.concat(keywords.close);
@@ -42,11 +50,12 @@ export default class DoEndParser {
 
     this.ignoreDoWithColon = config.ignoreDoWithColon;
 
-    // Set control values
-    this.past = false;
+    // Clean past styles
+    const editor = window.activeTextEditor;
+    if (editor !== undefined) {
+      editor.setDecorations(this.decoration, []);
+    }
   }
-
-  public dispose() {}
 
   // Main function that decorates matches
   public matchDoEnd() {
