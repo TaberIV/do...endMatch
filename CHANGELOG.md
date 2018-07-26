@@ -25,3 +25,7 @@ All notable changes to _do...End Match_ will be documented in this file.
 - Fixes bug for Elixir where `do:` still connects with `end`
 - Adds `doEndMatch.ignoreDoWithColon` setting to disable above fix
 - Changes `doEndMatch.dict` setting to `doEndMatch.keywords`
+
+#### 1.1.3
+
+- Settings are updated without reload
