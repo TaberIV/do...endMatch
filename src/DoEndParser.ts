@@ -6,7 +6,6 @@ import {
   Range,
   Selection,
   TextDocument,
-  TextEditor,
   TextEditorDecorationType,
   window,
   workspace
@@ -36,7 +35,9 @@ export default class DoEndParser {
     this.past = false;
   }
 
-  public dispose() {}
+  public dispose() {
+    this.clearDecorations();
+  }
 
   public updateConfig() {
     const config = workspace.getConfiguration("doEndMatch");
@@ -52,14 +53,7 @@ export default class DoEndParser {
     this.ignoreDoWithColon = config.ignoreDoWithColon;
 
     // Clean past styles
-    const editor = window.activeTextEditor;
-    if (editor !== undefined) {
-      this.clearDecorations(editor);
-    }
-  }
-
-  public clearDecorations(editor: TextEditor) {
-    editor.setDecorations(this.decoration, []);
+    this.clearDecorations();
   }
 
   // Main function that decorates matches
@@ -72,7 +66,7 @@ export default class DoEndParser {
 
     // Clean past styles
     if (this.past) {
-      this.clearDecorations(editor);
+      this.clearDecorations();
     }
 
     const doc = editor.document;
@@ -157,6 +151,14 @@ export default class DoEndParser {
       if (!nextRange.isEmpty) {
         editor.selection = new Selection(nextRange.start, nextRange.end);
       }
+    }
+  }
+
+  private clearDecorations() {
+    const editor = window.activeTextEditor;
+
+    if (editor !== undefined) {
+      editor.setDecorations(this.decoration, []);
     }
   }
 
