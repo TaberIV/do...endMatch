@@ -6,6 +6,7 @@ import {
   Range,
   Selection,
   TextDocument,
+  TextEditor,
   TextEditorDecorationType,
   window,
   workspace
@@ -53,8 +54,12 @@ export default class DoEndParser {
     // Clean past styles
     const editor = window.activeTextEditor;
     if (editor !== undefined) {
-      editor.setDecorations(this.decoration, []);
+      this.clearDecorations(editor);
     }
+  }
+
+  public clearDecorations(editor: TextEditor) {
+    editor.setDecorations(this.decoration, []);
   }
 
   // Main function that decorates matches
@@ -67,7 +72,7 @@ export default class DoEndParser {
 
     // Clean past styles
     if (this.past) {
-      editor.setDecorations(this.decoration, []);
+      this.clearDecorations(editor);
     }
 
     const doc = editor.document;

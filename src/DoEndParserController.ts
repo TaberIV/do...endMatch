@@ -2,7 +2,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as path from "path"; // VS Code extensibility API
-import * as delay from "timeout-as-promise"; // VS Code extensibility API
 import { Disposable, window, workspace } from "vscode";
 import DoEndParser from "./DoEndParser";
 
@@ -14,23 +13,31 @@ export default class DoEndParserController {
     this.parser = parser;
 
     const saveEv = workspace.onDidSaveTextDocument(saved => {
-      delay(2000).then(() => {
+      setTimeout(() => {
         const fileName = path.basename(saved.fileName);
         if (fileName !== "settings.json") {
           return;
         }
 
         this.parser.updateConfig();
-      });
+      }, 2000);
     });
 
     // Subscribe to selection change and editor activation events
     const subscriptions: Disposable[] = [];
     subscriptions.push(saveEv);
-    window.onDidChangeTextEditorSelection(this._onEvent, this, subscriptions);
-    window.onDidChangeActiveTextEditor(this._onEvent, this, subscriptions);
+    window.onDidChangeTextEditorSelection(
+      this.onChangeSelection,
+      this,
+      subscriptions
+    );
+    window.onDidChangeActiveTextEditor(
+      this.onChangeEditor,
+      this,
+      subscriptions
+    );
 
-    // Create a combined disposable from both event subscriptions
+    // Create a combined disposable
     this.disposable = Disposable.from(...subscriptions);
   }
 
@@ -38,7 +45,15 @@ export default class DoEndParserController {
     this.disposable.dispose();
   }
 
-  private _onEvent() {
+  private onChangeSelection() {
     this.parser.matchDoEnd();
+  }
+
+  private onChangeEditor() {
+    const editor = window.activeTextEditor;
+
+    if (editor !== undefined) {
+      this.parser.clearDecorations(editor);
+    }
   }
 }

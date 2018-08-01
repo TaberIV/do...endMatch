@@ -88,7 +88,6 @@
     "@types/mocha": "^5.2.4"
   },
   "dependencies": {
-    "path": "^0.12.7",
     "timeout-as-promise": "^1.0.0"
   }
 }
